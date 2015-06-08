@@ -1,6 +1,6 @@
-'From Cuis 4.2 of 25 July 2013 [latest update: #2156] on 8 February 2015 at 6:34:37.245631 pm'!
+'From Cuis 4.2 of 25 July 2013 [latest update: #2346] on 8 June 2015 at 6:26:51.221672 pm'!
 'Description This package creates files needed for electronic reporting of 1099-MISC data to the IRS using FIRE (Filing Information Returns Electronically). While the package is not comprehensive, it does report rents by a payer to multiple entities. It can be used as a code base for additional capabilities. SUnit tests are included. The test file meets IRS requirements as of January 2015.  Reference: IRS Publication 1220.'!
-!provides: 'Fire' 1 7!
+!provides: 'Fire' 1 8!
 !requires: 'Records' 1 1 nil!
 !classDefinition: #Form1099Misc category: #'Fire-Model'!
 Object subclass: #Form1099Misc
@@ -103,13 +103,13 @@ LengthTests class
 	instanceVariableNames: ''!
 
 
-!Form1099Misc commentStamp: 'dhn 1/19/2015 12:01' prior: 0!
+!Form1099Misc commentStamp: 'dhn 6/8/2015 18:18' prior: 0!
 Form1099Misc produces the records for electronic reporting of rents on Form 1099-MISC to federal and state revenue services. Record formats are defined in IRS Publication 1220.
 
-	"Form1099Misc makeTestFile"
-	"Form1099Misc makeRealFile"
+	Form1099Misc makeTestFile.
+	Form1099Misc makeRealFile.
 
-At this writing the 1099-MISC package of records for federal and state reporting in its simplest form consists of:
+As of January 2015 the 1099-MISC package of records for federal and state reporting in its simplest form consists of:
 
 	a T Record
 	an A Record
@@ -264,10 +264,13 @@ testFile: aFilename
 		close.
 	Object inform: 'Test file written to: ', aFilename! !
 
-!Form1099Misc class methodsFor: 'as yet unclassified' stamp: 'dhn 1/19/2015 12:01'!
+!Form1099Misc class methodsFor: 'as yet unclassified' stamp: 'dhn 6/8/2015 18:16'!
 how
-	"Form1099Misc makeTestFile"
-	"Form1099Misc makeRealFile"
+"
+	Form1099Misc makeTestFile.
+	
+	Form1099Misc makeRealFile.
+"
 ! !
 
 !Form1099Misc class methodsFor: 'as yet unclassified' stamp: 'dhn 1/17/2015 16:21'!
