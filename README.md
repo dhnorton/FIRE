@@ -1,1 +1,1 @@
-# Cuis-Smalltalk-fire
+Creates files needed for electronic reporting of 1099-MISC data to the IRS using FIRE (Filing Information Returns Electronically). While the package is not comprehensive, it does report rents by a payer to multiple entities. It can be used as a code base for additional capabilities. The generated test file meets IRS requirements as of January 2015.  Reference: IRS Publication 1220. SUnit tests are included. 
