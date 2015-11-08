@@ -1,6 +1,6 @@
-'From Cuis 4.2 of 25 July 2013 [latest update: #2346] on 8 June 2015 at 6:26:51.221672 pm'!
+'From Cuis 4.2 of 25 July 2013 [latest update: #2571] on 8 November 2015 at 5:38:19.055326 pm'!
 'Description This package creates files needed for electronic reporting of 1099-MISC data to the IRS using FIRE (Filing Information Returns Electronically). While the package is not comprehensive, it does report rents by a payer to multiple entities. It can be used as a code base for additional capabilities. SUnit tests are included. The test file meets IRS requirements as of January 2015.  Reference: IRS Publication 1220.'!
-!provides: 'Fire' 1 8!
+!provides: 'Fire' 1 9!
 !requires: 'Records' 1 1 nil!
 !classDefinition: #Form1099Misc category: #'Fire-Model'!
 Object subclass: #Form1099Misc
@@ -216,18 +216,18 @@ payerTotal: anObject
 	"Set the value of payerTotal"
 	payerTotal _ anObject! !
 
-!Form1099Misc methodsFor: 'output' stamp: 'dhn 1/17/2015 16:27'!
+!Form1099Misc methodsFor: 'output' stamp: 'dhn 11/8/2015 17:34'!
 realFile: aFilename
 	"Produce the file for reporting 1099-MISC via FIRE, the IRS electronic reporting system"
-	(StandardFileStream forceNewFileNamed: aFilename)
+	
+	aFilename asFileEntry forceWriteStream: [ :ios | ios
 		nextPutAll: Trecord new realT;
 		nextPutAll: Arecord new realA;
 		nextPutAll: Brecord new mnmB;
 		nextPutAll: Brecord new dhnB;
 		nextPutAll: Crecord new realC;
 		nextPutAll: Krecord new realK;
-		nextPutAll: Frecord new realF;
-		close.
+		nextPutAll: Frecord new realF].
 	Object inform: 'Real file for submission written to: ', aFilename! !
 
 !Form1099Misc methodsFor: 'accessing' stamp: 'dhn 1/17/2015 16:28'!
@@ -241,10 +241,11 @@ seq: anObject
 	"Set the value of seq"
 	seq _ anObject! !
 
-!Form1099Misc methodsFor: 'output' stamp: 'dhn 1/17/2015 16:28'!
+!Form1099Misc methodsFor: 'output' stamp: 'dhn 11/8/2015 17:25'!
 testFile: aFilename
 	"Produce a test file for FIRE, the IRS electronic reporting system"
-	(StandardFileStream forceNewFileNamed: aFilename)
+	
+	aFilename asFileEntry forceWriteStream: [ :ios | ios
 		nextPutAll: Trecord new testT;
 		nextPutAll: Arecord new realA;
 		nextPutAll: Brecord new testB01;
@@ -260,8 +261,7 @@ testFile: aFilename
 		nextPutAll: Brecord new testB11;
 		nextPutAll: Crecord new realC;
 		nextPutAll: Krecord new realK;
-		nextPutAll: Frecord new realF;
-		close.
+		nextPutAll: Frecord new realF].
 	Object inform: 'Test file written to: ', aFilename! !
 
 !Form1099Misc class methodsFor: 'as yet unclassified' stamp: 'dhn 6/8/2015 18:16'!
@@ -1022,9 +1022,12 @@ testPadK
 testPadT
 	^ self padOnly: Trecord! !
 
-!LengthTests methodsFor: 'as yet unclassified' stamp: 'dhn 1/17/2015 17:51'!
+!LengthTests methodsFor: 'as yet unclassified' stamp: 'dhn 11/8/2015 17:20'!
 testPadding
-	^ (StandardFileStream forceNewFileNamed: 'c:\aax\emfire.txt')
+	| file |
+
+	file _ 'c:\aax\emfire.txt'.
+	file asFileEntry forceWriteStream: [ :ios | ios
 		nextPutAll: self testPadT;
 		nextPutAll: self testPadA;
 		nextPutAll: self testPadB;
@@ -1036,8 +1039,8 @@ testPadding
 		nextPutAll: self testDataB;
 		nextPutAll: self testDataC;
 		nextPutAll: self testDataK;
-		nextPutAll: self testDataF;
-		close.
+		nextPutAll: self testDataF].
+	file asFileEntry delete	
 ! !
 
 !LengthTests methodsFor: 'as yet unclassified' stamp: 'dhn 1/17/2015 17:52'!
